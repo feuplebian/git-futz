@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# LICENSE: GPLv2
+
+# set -o xtrace
+
+declare UPSTREAM=$1
+
+declare DATE="date -u +%s"
+
+declare -a REVS
+REVS=($(git rev-list "$UPSTREAM..@"))
+
+declare NUM
+NUM=${#REVS[@]}
+
+declare START STOP
+START=$($DATE -d "$(git show --format=%aI $UPSTREAM)")
+STOP=$($DATE)
+
+declare TIMEDELTA
+TIMEDELTA=$(( (STOP - START) / NUM ))
+
+EDITOR="sed -i -e 's/^pick /edit /g'" git rebase -i $UPSTREAM
+
+declare NEW_DATE
+i=0
+while [ $i -lt $NUM ]; do
+    TS=$(( START + TIMEDELTA * (i + 1) ))
+    NEW_DATE=$(TZ=$(timedatectl list-timezones | shuf -n1) date -d "@$TS")
+    GIT_COMMITTER_DATE="$NEW_DATE" git amend --no-edit --date="$NEW_DATE"
+    git rebase --continue
+    i=$(( i + 1 ))
+done
