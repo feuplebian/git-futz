@@ -13,7 +13,11 @@ $ git-futz <last-public-commit>
 
 `git-futz` will rewrite the timestamps such that they are evenly
 distributed between the timestamp of the `<last-public-commit>` and
-now.  And it will assign a timezone randomly.
+_now_.
+
+It also assigns a timezone randomly to each timestamp, this however
+needs some Linux specific commands.  This feature maybe dropped to
+achieve wider compatibility.
 
 # TODOs
 
