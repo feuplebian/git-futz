@@ -4,9 +4,22 @@
 
 # set -o xtrace
 
-declare UPSTREAM=$1
+case $1 in
+    --no-tz)
+	TZ=
+	shift
+	;;
+    *)
+	if [[ -f $(which timedatectl 2> /dev/null) ]]; then
+	    TZ=$(timedatectl list-timezones | shuf -n1)
+	else
+	    TZ=
+	fi
+esac
 
-declare DATE="date -u +%s"
+declare DATE_UTC="date -u +%s"
+
+declare UPSTREAM=$1
 
 declare -a REVS
 REVS=($(git rev-list "$UPSTREAM..@"))
@@ -15,8 +28,8 @@ declare NUM
 NUM=${#REVS[@]}
 
 declare START STOP
-START=$($DATE -d "$(git show --format=%aI $UPSTREAM)")
-STOP=$($DATE)
+START=$($DATE_UTC -d "$(git show --format=%aI $UPSTREAM)")
+STOP=$($DATE_UTC)
 
 declare TIMEDELTA
 TIMEDELTA=$(( (STOP - START) / NUM ))
@@ -27,7 +40,7 @@ declare NEW_DATE
 i=0
 while [ $i -lt $NUM ]; do
     TS=$(( START + TIMEDELTA * (i + 1) ))
-    NEW_DATE=$(TZ=$(timedatectl list-timezones | shuf -n1) date -d "@$TS")
+    NEW_DATE=$(TZ="$TZ" date -d "@$TS")
     GIT_COMMITTER_DATE="$NEW_DATE" git amend --no-edit --date="$NEW_DATE"
     git rebase --continue
     i=$(( i + 1 ))
