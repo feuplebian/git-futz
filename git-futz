@@ -4,6 +4,11 @@
 
 # set -o xtrace
 
+if [[ $1 =~ -h ]]; then
+    echo -e "\e[1mUsage:\e[0m ${0##*/} [--no-tz] <last-public-commit>"
+    exit
+fi
+
 case $1 in
     --no-tz)
 	TZ=
