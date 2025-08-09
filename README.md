@@ -55,10 +55,3 @@ commit.
   since the script rewrites history, and the `pre-push` hook (see:
   `.git/hooks/pre-push.sample`) runs _after_ determining the commits
   that should be pushed.
-
-# TODOs
-
-Preserve committer name & email, currently it is assumed the original
-committer was the person running the script.  Since this is a branch
-with unpublished commits, it seems like a reasonable assumption, but
-strictly speaking it may not be the case.

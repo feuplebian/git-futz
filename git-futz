@@ -49,12 +49,17 @@ TIMEDELTA=$(( (STOP - START) / NUM ))
 
 EDITOR="sed -i -e 's/^pick /edit /g'" git rebase -i $UPSTREAM
 
-declare NEW_DATE
+declare NEW_DATE CNAME CEMAIL
 i=0
 while [ $i -lt $NUM ]; do
     TS=$(( START + TIMEDELTA * (i + 1) ))
     NEW_DATE=$(TZ="$TZ" date -d "@$TS")
-    GIT_COMMITTER_DATE="$NEW_DATE" git amend --no-edit --date="$NEW_DATE"
+    CNAME="$(git log -1 --format=%aN)"
+    CEMAIL="$(git log -1 --format=%aE)"
+    GIT_COMMITTER_NAME="$CNAME" \
+		      GIT_COMMITTER_EMAIL="$CEMAIL" \
+		      GIT_COMMITTER_DATE="$NEW_DATE" \
+		      git amend --no-edit --date="$NEW_DATE"
     git rebase --continue
     i=$(( i + 1 ))
 done
