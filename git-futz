@@ -59,7 +59,7 @@ while [ $i -lt $NUM ]; do
     GIT_COMMITTER_NAME="$CNAME" \
 		      GIT_COMMITTER_EMAIL="$CEMAIL" \
 		      GIT_COMMITTER_DATE="$NEW_DATE" \
-		      git amend --no-edit --date="$NEW_DATE"
+		      git commit --amend --no-edit --date="$NEW_DATE"
     git rebase --continue
     i=$(( i + 1 ))
 done
