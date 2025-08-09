@@ -53,9 +53,8 @@ commit.
 	 ```
 	 A ----- B ----- C ----- D ----- E (public)
 	  \
-	   \
-	    F ----- G ----- H
-	  private -->
+	   F ----- G ----- H
+     private -->
 	 ```
 
 # FAQ
