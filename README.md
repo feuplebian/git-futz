@@ -36,7 +36,7 @@ commit.
 
   1. straight line history: `B`, `C`, `D` will be rewritten
      ```
-	 public   private ->
+	 public   private -->
 	    A ----- B ----- C ----- D
 	 ```
   2. diverging history:
@@ -45,7 +45,7 @@ commit.
 	  \
 	   \
 	    F ----- G ----- H
-	  private ->
+	  private -->
 	 ```
 
 # FAQ
