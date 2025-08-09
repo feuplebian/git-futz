@@ -5,7 +5,7 @@
 # set -o xtrace
 
 if [[ $1 =~ -h ]]; then
-    echo -e "\e[1mUsage:\e[0m ${0##*/} [--no-tz] <last-public-commit>"
+    echo -e "\e[1mUsage:\e[0m ${0##*/} [--no-tz] [<last-public-commit>]"
     exit
 fi
 
@@ -24,7 +24,15 @@ esac
 
 declare DATE_UTC="date -u +%s"
 
-declare UPSTREAM=$1
+declare UPSTREAM BRANCH REMOTE REMOTE_HEAD
+if [[ -n $1 ]]; then
+    UPSTREAM=$1
+else
+    BRANCH=$(git branch --show-current)
+    REMOTE=$(git config get "branch.${BRANCH}.remote")
+    REMOTE_HEAD=$(git config get "branch.${BRANCH}.merge")
+    UPSTREAM="$REMOTE${REMOTE_HEAD/#'refs/heads'/}"
+fi
 
 declare -a REVS
 REVS=($(git rev-list "$UPSTREAM..@"))

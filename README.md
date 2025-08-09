@@ -8,7 +8,7 @@ Inside your repo before pushing your unpublished commits, run the
 script like this:
 
 ```shell
-$ git-futz [--no-tz] <last-public-commit>
+$ git-futz [--no-tz] [<last-public-commit>]
 ```
 
 `git-futz` will rewrite the timestamps such that they are evenly
@@ -24,7 +24,29 @@ feature is disabled.
 If you want to disable the feature explicitly, you can pass the
 optional flag `--no-tz`.
 
+Note that `<last-public-commit>` is optional.  If it is not provided,
+the following heuristic will be applied to find the last public
+commit.
 
+- identify remote associated to the current branch: `my_remote`
+- find the remote head it is configured to merge with: `refs/heads/branch`
+- find the last public commit using: `my_remote/branch..HEAD`;
+  note the 2 dots, it means in the case of diverging histories, the
+  last common ancestor will be picked
+
+  1. straight line history: `B`, `C`, `D` will be rewritten
+     ```
+	 public   private ->
+	    A ----- B ----- C ----- D
+	 ```
+  2. diverging history:
+	 ```
+	 A ----- B ----- C ----- D ----- E (public)
+	  \
+	   \
+	    F ----- G ----- H
+	  private ->
+	 ```
 
 # FAQ
 
