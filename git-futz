@@ -33,7 +33,7 @@ declare NUM
 NUM=${#REVS[@]}
 
 declare START STOP
-START=$($DATE_UTC -d "$(git show --format=%aI $UPSTREAM)")
+START=$($DATE_UTC -d "$(git log -1 --format=%aI $UPSTREAM)")
 STOP=$($DATE_UTC)
 
 declare TIMEDELTA
