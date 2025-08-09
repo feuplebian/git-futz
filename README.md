@@ -57,6 +57,18 @@ commit.
      private -->
 	 ```
 
+# Change log
+- POC: works after some `sed` magic :tada:
+  - depends on Python for date arithmetic :slightly_frowning_face:
+- Reimplement date arithmetic using integer maths in Bash :wink:
+- Add timezone randomisation
+- Make timezone randomisation optional; improves portability :sparkles:
+- Bug fix: was reading commit timestamp with `git-show` instead of `git-log` :no_mouth:
+- Preserve committer name & email :1st_place_medal:
+- Document various install options
+- Add automatic upstream detection heuristic :gift:
+
+
 # FAQ
 
 - **Q:** How can I run `git-futz` automatically before a `git-push`?
