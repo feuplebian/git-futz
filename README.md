@@ -2,6 +2,16 @@
 
 Fuzz Git commit timestamps & timezones
 
+## Installation
+
+No installation is necessary, however if you put the script in your
+`PATH`, you could run the script as a custom Git command; e.g.
+
+```shell
+$ cp git-futz ~/bin/
+$ git futz -h
+```
+
 ## Usage
 
 Inside your repo before pushing your unpublished commits, run the
@@ -50,8 +60,36 @@ commit.
 
 # FAQ
 
-- *Q:* Can I install the script as a git hook?
-- *A:* Unfortunately currently I have not found a way to do this,
+- **Q:** How can I run `git-futz` automatically before a `git-push`?
+- **A:** You could write a git alias that runs `git-futz` before doing
+  a push.
+  ```config
+  [alias]
+          futzy-push  =  !git futz && git push
+  ```
+
+- **Q:** Can I install the script as a git hook?
+- **A:** Unfortunately currently I have not found a way to do this,
   since the script rewrites history, and the `pre-push` hook (see:
   `.git/hooks/pre-push.sample`) runs _after_ determining the commits
   that should be pushed.
+
+
+- **Q:** Can I schedule running `git-futz` and `git-push` to also not
+  reveal when I ran the command?
+- **A:** This is a bit tricky, I'm not certain yet what would be the
+  best practice.  Note that `git-futz` only alters the timestamp in
+  the commit history.  When you `git-push`, your remote forge (GitHub,
+  GitLab, etc) can record the time.
+
+  On GitHub, this is sometime shown as a notification on the
+  repository page:
+
+  > @username pushed branch `branch_name` XYZ minutes ago
+
+  I don't think this can be avoided.  So to "poison" this information,
+  you could schedule a cron job at your desired time.  Something like
+  this should work:
+  ```shell
+  cd /path/to/repo && git futz && git push
+  ```
