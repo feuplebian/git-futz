@@ -49,7 +49,7 @@ commit.
 	 public   private -->
 	    A ----- B ----- C ----- D
 	 ```
-  2. diverging history:
+  2. diverging history: `F`, `G`, `H` will be rewritten 
 	 ```
 	 A ----- B ----- C ----- D ----- E (public)
 	  \
