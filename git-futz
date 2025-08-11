@@ -54,8 +54,8 @@ i=0
 while [ $i -lt $NUM ]; do
     TS=$(( START + TIMEDELTA * (i + 1) ))
     NEW_DATE=$(TZ="$TZ" date -d "@$TS")
-    CNAME="$(git log -1 --format=%aN)"
-    CEMAIL="$(git log -1 --format=%aE)"
+    CNAME="$(git log -1 --format=%cN)"
+    CEMAIL="$(git log -1 --format=%cE)"
     GIT_COMMITTER_NAME="$CNAME" \
 		      GIT_COMMITTER_EMAIL="$CEMAIL" \
 		      GIT_COMMITTER_DATE="$NEW_DATE" \
