@@ -15,8 +15,8 @@ case $1 in
 	shift
 	;;
     *)
-	if [[ -f $(which timedatectl 2> /dev/null) ]]; then
-	    TZ=$(timedatectl list-timezones | shuf -n1)
+	if [[ -d /usr/share/zoneinfo/posix/ ]]; then
+	    TZ=$(find /usr/share/zoneinfo/posix/ -type f | cut -d '/' -f6,7 | shuf -n1)
 	else
 	    TZ=
 	fi
