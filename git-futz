@@ -40,6 +40,11 @@ REVS=($(git rev-list "$UPSTREAM..@"))
 declare NUM
 NUM=${#REVS[@]}
 
+if [[ 0 -eq $NUM ]]; then
+    echo "No commits to rewrite, exiting"
+    exit 1
+fi
+
 declare START STOP
 START=$($DATE_UTC -d "$(git log -1 --format=%aI $UPSTREAM)")
 STOP=$($DATE_UTC)
