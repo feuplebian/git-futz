@@ -27,8 +27,8 @@ _now_.
 
 Optionally, it also assigns a timezone randomly, i.e. if you run it
 today it might choose London, and on a subsequent call tomorrow it
-could pick Tokyo.  This however needs some Linux specific commands
-(`timedatectl` & `shuf`).  If the dependencies are not available, this
+could pick Tokyo.  This however works only on Linux (needs: `tzdata`,
+`find` & `shuf`).  If the `tzdata` database cannot be found, this
 feature is disabled.
 
 If you want to disable the feature explicitly, you can pass the
